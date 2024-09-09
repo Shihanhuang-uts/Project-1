@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D4CB4452C8EF5140047B7C7 /* AddActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4CB4442C8EF5140047B7C7 /* AddActivityView.swift */; };
+		7D4CB4492C8EFBA70047B7C7 /* ManageActivitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4CB4482C8EFBA70047B7C7 /* ManageActivitiesView.swift */; };
+		7D4CB44B2C8EFC240047B7C7 /* StudyActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4CB44A2C8EFC240047B7C7 /* StudyActivity.swift */; };
+		7D4CB44D2C8EFC990047B7C7 /* EditActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4CB44C2C8EFC990047B7C7 /* EditActivityView.swift */; };
 		7D4EACD72C8ED6960043E701 /* Project1App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4EACD62C8ED6960043E701 /* Project1App.swift */; };
 		7D4EACD92C8ED6960043E701 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4EACD82C8ED6960043E701 /* ContentView.swift */; };
 		7D4EACDB2C8ED6A40043E701 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D4EACDA2C8ED6A40043E701 /* Assets.xcassets */; };
@@ -34,6 +38,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7D4CB4442C8EF5140047B7C7 /* AddActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddActivityView.swift; sourceTree = "<group>"; };
+		7D4CB4482C8EFBA70047B7C7 /* ManageActivitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageActivitiesView.swift; sourceTree = "<group>"; };
+		7D4CB44A2C8EFC240047B7C7 /* StudyActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyActivity.swift; sourceTree = "<group>"; };
+		7D4CB44C2C8EFC990047B7C7 /* EditActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditActivityView.swift; sourceTree = "<group>"; };
 		7D4EACD32C8ED6960043E701 /* Project1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D4EACD62C8ED6960043E701 /* Project1App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project1App.swift; sourceTree = "<group>"; };
 		7D4EACD82C8ED6960043E701 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -94,12 +102,11 @@
 		7D4EACD52C8ED6960043E701 /* Project1 */ = {
 			isa = PBXGroup;
 			children = (
+				7D4CB44A2C8EFC240047B7C7 /* StudyActivity.swift */,
 				7D4EACD62C8ED6960043E701 /* Project1App.swift */,
 				7D4EACD82C8ED6960043E701 /* ContentView.swift */,
 				7D4EACDA2C8ED6A40043E701 /* Assets.xcassets */,
 				7D4EAD032C8EE7E80043E701 /* Views */,
-				7D4EAD022C8EE7E10043E701 /* Preferences */,
-				7D4EAD012C8EE7D20043E701 /* Extensions */,
 				7D4EAD002C8EE7AD0043E701 /* Model */,
 				7D4EACDC2C8ED6A40043E701 /* Preview Content */,
 			);
@@ -138,24 +145,12 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		7D4EAD012C8EE7D20043E701 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Extensions;
-			path = Project1/Extensions;
-			sourceTree = SOURCE_ROOT;
-		};
-		7D4EAD022C8EE7E10043E701 /* Preferences */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Preferences;
-			sourceTree = "<group>";
-		};
 		7D4EAD032C8EE7E80043E701 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7D4CB4442C8EF5140047B7C7 /* AddActivityView.swift */,
+				7D4CB4482C8EFBA70047B7C7 /* ManageActivitiesView.swift */,
+				7D4CB44C2C8EFC990047B7C7 /* EditActivityView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -290,8 +285,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D4CB44B2C8EFC240047B7C7 /* StudyActivity.swift in Sources */,
+				7D4CB4452C8EF5140047B7C7 /* AddActivityView.swift in Sources */,
 				7D4EACD92C8ED6960043E701 /* ContentView.swift in Sources */,
+				7D4CB4492C8EFBA70047B7C7 /* ManageActivitiesView.swift in Sources */,
 				7D4EACD72C8ED6960043E701 /* Project1App.swift in Sources */,
+				7D4CB44D2C8EFC990047B7C7 /* EditActivityView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
