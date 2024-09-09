@@ -97,6 +97,10 @@
 				7D4EACD62C8ED6960043E701 /* Project1App.swift */,
 				7D4EACD82C8ED6960043E701 /* ContentView.swift */,
 				7D4EACDA2C8ED6A40043E701 /* Assets.xcassets */,
+				7D4EAD032C8EE7E80043E701 /* Views */,
+				7D4EAD022C8EE7E10043E701 /* Preferences */,
+				7D4EAD012C8EE7D20043E701 /* Extensions */,
+				7D4EAD002C8EE7AD0043E701 /* Model */,
 				7D4EACDC2C8ED6A40043E701 /* Preview Content */,
 			);
 			path = Project1;
@@ -125,6 +129,35 @@
 				7D4EACF32C8ED6A50043E701 /* Project1UITestsLaunchTests.swift */,
 			);
 			path = Project1UITests;
+			sourceTree = "<group>";
+		};
+		7D4EAD002C8EE7AD0043E701 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		7D4EAD012C8EE7D20043E701 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Extensions;
+			path = Project1/Extensions;
+			sourceTree = SOURCE_ROOT;
+		};
+		7D4EAD022C8EE7E10043E701 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Preferences;
+			sourceTree = "<group>";
+		};
+		7D4EAD032C8EE7E80043E701 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
