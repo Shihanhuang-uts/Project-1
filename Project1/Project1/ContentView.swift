@@ -10,23 +10,38 @@ import SwiftUI
 struct ContentView: View {
     @State private var selectedDate = Date()
     @State private var activities: [StudyActivity] = []
-    
+
     var body: some View {
         NavigationView {
             VStack {
-                DatePicker("Select Date", selection: $selectedDate, displayedComponents: .date)
-                    .datePickerStyle(GraphicalDatePickerStyle())
+                CustomCalendarView(selectedDate: $selectedDate, activities: activities)
                     .padding()
 
-                // Use a ForEach inside the List to avoid unnecessary reloading of the List
-                List {
-                    ForEach(activities.filter { Calendar.current.isDate($0.date, inSameDayAs: selectedDate) }) { activity in
-                        Text(activity.title)
+                ScrollView {
+                    LazyVStack(spacing: 10) {
+                        ForEach(activities.filter { Calendar.current.isDate($0.date, inSameDayAs: selectedDate) }) { activity in
+                            HStack {
+                                VStack(alignment: .leading, spacing: 5) {
+                                    Text(activity.title)
+                                        .font(.headline)
+                                        .foregroundColor(.black)
+                                    if !activity.subtitle.isEmpty {
+                                        Text(activity.subtitle)
+                                            .font(.subheadline)
+                                            .foregroundColor(.black.opacity(0.7))
+                                    }
+                                }
+                                Spacer()
+                            }
+                            .padding()
+                            .background(activity.color)
+                            .cornerRadius(10)
+                        }
                     }
-                    .onDelete(perform: deleteActivity)
+                    .padding(.horizontal)
                 }
                 
-                Spacer() // Push buttons to the bottom
+                Spacer()
                 
                 HStack {
                     NavigationLink(destination: AddActivityView(selectedDate: selectedDate, addActivity: { activity in
@@ -49,19 +64,9 @@ struct ContentView: View {
                     }
                     .padding()
                 }
-                .padding(.bottom, 20) // Add padding to the bottom for safe area
+                .padding(.bottom, 20)
             }
             .navigationTitle("Study Plan")
-        }
-    }
-    
-    // Function to delete an activity
-    private func deleteActivity(at offsets: IndexSet) {
-        let filteredActivities = activities.filter { Calendar.current.isDate($0.date, inSameDayAs: selectedDate) }
-        for index in offsets {
-            if let activityIndex = activities.firstIndex(where: { $0.id == filteredActivities[index].id }) {
-                activities.remove(at: activityIndex)
-            }
         }
     }
 }
@@ -71,4 +76,3 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
-

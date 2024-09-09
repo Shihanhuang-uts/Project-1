@@ -10,7 +10,8 @@ import SwiftUI
 struct EditActivityView: View {
     @Binding var activity: StudyActivity?
     @Binding var newTitle: String
-    @Binding var newDate: Date
+    @Binding var newSubtitle: String
+    @Binding var newColor: Color
     var saveChanges: () -> Void
 
     @Environment(\.presentationMode) var presentationMode
@@ -22,8 +23,12 @@ struct EditActivityView: View {
                     TextField("Enter new title", text: $newTitle)
                 }
 
-                Section(header: Text("Edit Activity Date")) {
-                    DatePicker("Select new date", selection: $newDate, displayedComponents: .date)
+                Section(header: Text("Edit Activity Subtitle")) {
+                    TextField("Enter new subtitle", text: $newSubtitle)
+                }
+
+                Section(header: Text("Select a Color")) {
+                    ColorPicker("Pick a color", selection: $newColor)
                 }
             }
             .navigationTitle("Edit Activity")
@@ -37,8 +42,12 @@ struct EditActivityView: View {
 
 struct EditActivityView_Previews: PreviewProvider {
     static var previews: some View {
-        EditActivityView(activity: .constant(nil), newTitle: .constant(""), newDate: .constant(Date()), saveChanges: {})
+        EditActivityView(
+            activity: .constant(nil),
+            newTitle: .constant("Sample Title"),
+            newSubtitle: .constant("Sample Subtitle"),
+            newColor: .constant(.blue),
+            saveChanges: {}
+        )
     }
 }
-
-

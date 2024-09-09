@@ -10,10 +10,12 @@ import SwiftUI
 struct AddActivityView: View {
     var selectedDate: Date
     @State private var activityTitle: String = ""
+    @State private var activitySubtitle: String = ""
+    @State private var selectedColor: Color = .blue
     var addActivity: (StudyActivity) -> Void
     
     @Environment(\.presentationMode) var presentationMode
-    
+
     var isDateValid: Bool {
         let today = Calendar.current.startOfDay(for: Date())
         return selectedDate >= today
@@ -33,11 +35,28 @@ struct AddActivityView: View {
             TextField("Enter activity title", text: $activityTitle)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
             
+            Text("Activity Subtitle")
+                .font(.headline)
+            
+            TextField("Enter activity subtitle", text: $activitySubtitle)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+            
+            Text("Select a Color")
+                .font(.headline)
+            
+            ColorPicker("Pick a color", selection: $selectedColor)
+                .padding()
+            
             Spacer()
             
             if isDateValid {
                 Button(action: {
-                    let newActivity = StudyActivity(date: selectedDate, title: activityTitle)
+                    let newActivity = StudyActivity(
+                        date: selectedDate,
+                        title: activityTitle,
+                        subtitle: activitySubtitle,
+                        color: selectedColor
+                    )
                     addActivity(newActivity)
                     presentationMode.wrappedValue.dismiss()
                 }) {
@@ -60,3 +79,10 @@ struct AddActivityView: View {
         .navigationTitle("Add Activity")
     }
 }
+
+struct AddActivityView_Previews: PreviewProvider {
+    static var previews: some View {
+        AddActivityView(selectedDate: Date(), addActivity: { _ in })
+    }
+}
+
