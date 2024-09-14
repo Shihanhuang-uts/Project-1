@@ -10,7 +10,8 @@ import SwiftUI
 struct ContentView: View {
     @State private var selectedDate = Date()
     @State private var activities: [StudyActivity] = []
-
+    
+    // MARK: - Body
     var body: some View {
         NavigationView {
             VStack {
@@ -20,16 +21,14 @@ struct ContentView: View {
                     .fontWeight(.bold)
                     .padding(.top, 20)
                     .frame(maxWidth: .infinity, alignment: .center)
-
+                
                 CustomCalendarView(selectedDate: $selectedDate, activities: activities)
                     .padding()
 
                 ScrollView {
                     LazyVStack(spacing: 10) {
-                        // Filter activities for the selected date
                         let filteredActivities = activities.filter { Calendar.current.isDate($0.date, inSameDayAs: selectedDate) }
 
-                        // Check if there are any incomplete activities for the selected date
                         let incompleteActivities = filteredActivities.filter { !$0.isCompleted }
 
                         VStack {
@@ -46,12 +45,13 @@ struct ContentView: View {
                                         HStack {
                                             Button(action: {
                                                 activity.isCompleted.toggle()
+                                                saveActivities() // Auto-save activities when completed status changes
                                             }) {
                                                 Image(systemName: activity.isCompleted ? "checkmark.square.fill" : "square")
                                                     .foregroundColor(activity.isCompleted ? .green : .gray)
                                             }
                                             .buttonStyle(PlainButtonStyle())
-
+                                            
                                             VStack(alignment: .leading, spacing: 5) {
                                                 Text(activity.title)
                                                     .font(.headline)
@@ -81,17 +81,28 @@ struct ContentView: View {
                     }
                     .padding(.top)
                 }
-
+                
                 Spacer()
-
+                
                 HStack {
                     NavigationLink(destination: AddActivityView(selectedDate: selectedDate, addActivity: { activity in
                         activities.append(activity)
+                        saveActivities() // Save the activity after adding it
                     })) {
                         Image(systemName: "plus.circle.fill")
                             .resizable()
                             .frame(width: 50, height: 50)
                             .foregroundColor(.blue)
+                    }
+                    .padding()
+
+                    Spacer()
+
+                    NavigationLink(destination: DaySummaryView(selectedDate: $selectedDate, activities: $activities)) {
+                        Image(systemName: "doc.text.magnifyingglass")
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                            .foregroundColor(.purple)
                     }
                     .padding()
 
@@ -109,6 +120,27 @@ struct ContentView: View {
             }
             .navigationBarHidden(true)  // Hide the default navigation bar title
         }
+        .onAppear(perform: loadActivities) // Load activities when the view appears
+    }
+
+    // MARK: - Functions
+    private func saveActivities() {
+        do {
+            let data = try JSONEncoder().encode(activities)
+            UserDefaults.standard.set(data, forKey: "savedActivities")
+        } catch {
+            print("Failed to save activities: \(error)")
+        }
+    }
+
+    private func loadActivities() {
+        if let data = UserDefaults.standard.data(forKey: "savedActivities") {
+            do {
+                activities = try JSONDecoder().decode([StudyActivity].self, from: data)
+            } catch {
+                print("Failed to load activities: \(error)")
+            }
+        }
     }
 }
 
@@ -117,3 +149,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
