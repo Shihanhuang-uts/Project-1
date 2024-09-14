@@ -18,37 +18,37 @@ struct ManageActivitiesView: View {
     @State private var showAlert = false
     @State private var activityToDelete: StudyActivity?
 
+    // State variables to control visibility of sections
+    @State private var showIncompleteActivities = true
+    @State private var showCompletedActivities = true
+
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
                 // Incomplete Activities Section
-                Section(header: Text("Incomplete Activities")
-                            .font(.headline)
-                            .foregroundColor(.primary)
-                            .padding(.leading)
-                            .frame(maxWidth: .infinity, alignment: .leading)) {
+                sectionHeader(title: "Incomplete Activities", isExpanded: $showIncompleteActivities)
+                
+                if showIncompleteActivities {
                     LazyVStack(spacing: 10) {
                         ForEach($activities.filter { !$0.isCompleted.wrappedValue }) { $activity in
-                            activityRow(activity: $activity)
+                            activityCard(activity: $activity)
                         }
                     }
                 }
                 
                 // Completed Activities Section
-                Section(header: Text("Completed Activities")
-                            .font(.headline)
-                            .foregroundColor(.primary)
-                            .padding(.leading)
-                            .frame(maxWidth: .infinity, alignment: .leading)) {
+                sectionHeader(title: "Completed Activities", isExpanded: $showCompletedActivities)
+                
+                if showCompletedActivities {
                     LazyVStack(spacing: 10) {
                         ForEach($activities.filter { $0.isCompleted.wrappedValue }) { $activity in
-                            activityRow(activity: $activity)
+                            activityCard(activity: $activity)
                         }
                     }
                 }
             }
             .padding(.horizontal)
-            .padding(.top, 10)
+            .padding(.top, 20)
         }
         .alert(isPresented: $showAlert) {
             Alert(
@@ -72,26 +72,52 @@ struct ManageActivitiesView: View {
             )
         }
         .navigationTitle("Manage Activities")
+        .background(Color(.systemGroupedBackground).edgesIgnoringSafeArea(.all))
     }
 
-    private func activityRow(activity: Binding<StudyActivity>) -> some View {
+    private func sectionHeader(title: String, isExpanded: Binding<Bool>) -> some View {
+        Button(action: {
+            withAnimation {
+                isExpanded.wrappedValue.toggle()
+            }
+        }) {
+            HStack {
+                Text(title)
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundColor(.primary)
+                Spacer()
+                Image(systemName: isExpanded.wrappedValue ? "chevron.down" : "chevron.right")
+                    .foregroundColor(.blue)
+                    .font(.headline)
+            }
+            .padding()
+            .background(Color.white)
+            .cornerRadius(10)
+            .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 5)
+        }
+        .buttonStyle(PlainButtonStyle())
+    }
+
+    private func activityCard(activity: Binding<StudyActivity>) -> some View {
         HStack(alignment: .top) {
             Button(action: {
                 activity.isCompleted.wrappedValue.toggle()
             }) {
                 Image(systemName: activity.isCompleted.wrappedValue ? "checkmark.square.fill" : "square")
                     .foregroundColor(activity.isCompleted.wrappedValue ? .green : .gray)
+                    .padding(.trailing, 10)
             }
             .buttonStyle(PlainButtonStyle())
             
             VStack(alignment: .leading, spacing: 5) {
                 Text(activity.title.wrappedValue)
                     .font(.headline)
-                    .foregroundColor(activity.isCompleted.wrappedValue ? .gray : .black)
+                    .foregroundColor(activity.isCompleted.wrappedValue ? .gray : .primary)
                 if !activity.subtitle.wrappedValue.isEmpty {
                     Text(activity.subtitle.wrappedValue)
                         .font(.subheadline)
-                        .foregroundColor(activity.isCompleted.wrappedValue ? .gray.opacity(0.7) : .black.opacity(0.7))
+                        .foregroundColor(activity.isCompleted.wrappedValue ? .gray.opacity(0.7) : .secondary)
                 }
             }
             Spacer()
@@ -106,15 +132,15 @@ struct ManageActivitiesView: View {
                 Button(action: {
                     startEditing(activity: activity.wrappedValue)
                 }) {
-                    Text("Edit")
-                        .font(.subheadline)
+                    Image(systemName: "pencil")
                         .foregroundColor(.blue)
                 }
             }
         }
         .padding()
         .background(activity.isCompleted.wrappedValue ? Color.gray.opacity(0.2) : activity.color.wrappedValue)
-        .cornerRadius(10)
+        .cornerRadius(15)
+        .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 5)
     }
 
     private func startEditing(activity: StudyActivity) {
